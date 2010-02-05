@@ -76,7 +76,11 @@ module Jekyll
     # Returns nothing
     def render(layouts, site_payload)
       payload = {"page" => self.data}.deep_merge(site_payload)
-      do_layout(payload, layouts)
+      begin
+        do_layout(payload, layouts)
+      rescue => err
+        puts "Caught error while processing #{self.name}: #{err}"
+      end
     end
 
     # Write the generated page file to the destination directory.
